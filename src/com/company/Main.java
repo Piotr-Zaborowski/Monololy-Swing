@@ -17,7 +17,6 @@ class MyJComponent extends JComponent {
     boolean CanEndTurn=false;
     boolean CanRollDice=true;
     static int CurrentDiceRoll=0;
-
     boolean IsGameGoing=false;
 
 
@@ -28,7 +27,7 @@ class MyJComponent extends JComponent {
         if (IsGameGoing)
         {
             try {
-                BufferedImage image = ImageIO.read(getClass().getResource("/plansza.jpg"));
+                BufferedImage image = ImageIO.read(getClass().getResource("/monopoly-plansza.jpg"));
                 g.drawImage(image,0,0,null);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -53,6 +52,16 @@ class MyJComponent extends JComponent {
     JLabel playerlabel=new JLabel();
     Thread thread1;
 
+    GameLogic G1=new GameLogic();
+
+    Player P1=new Player();
+    Player P2=new Player();
+    Player P3=new Player();
+    Player P4=new Player();
+
+    JLabel P1l=new JLabel();
+
+
     void currentplayerthread()
     {
         thread1 = new Thread(() -> {
@@ -65,9 +74,17 @@ class MyJComponent extends JComponent {
                 playerlabel.setBounds(270, 100, 300, 80);
                 add(playerlabel);
 
-                repaint(270,100,300,80);
+                P1l.setBounds(G1.XonMap(1),800,40,40);
+                P1l.setText("P1");
+                P1l.setForeground(Color.RED);
+                P1l.setFont(new Font("Serif", Font.BOLD, 30));
+                add(P1l);
+
+
+                //repaint(270,100,300,80);
+                repaint();
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -217,6 +234,7 @@ class MyJComponent extends JComponent {
                                         public void actionPerformed(ActionEvent e) {
                                             if(CanEndTurn==true)
                                             {
+                                                CanEndTurn=false;
                                                 CurrentDiceRoll=0;
                                                 Dice1.setText("");
                                                 Dice2.setText("");
@@ -250,6 +268,14 @@ class MyJComponent extends JComponent {
                                                 add(Dice1);
                                                 add(Dice2);
                                                 CurrentDiceRoll=random1+random2;
+
+                                                if(CurrentPlayer==1) P1.ChangePosition(CurrentDiceRoll);
+                                                if(CurrentPlayer==2) P2.ChangePosition(CurrentDiceRoll);
+                                                if(CurrentPlayer==3) P3.ChangePosition(CurrentDiceRoll);
+                                                if(CurrentPlayer==4) P4.ChangePosition(CurrentDiceRoll);
+
+
+
 
                                                 repaint();
                                                 CanRollDice=false;
@@ -298,7 +324,7 @@ public class Main {
         f.add(com);
         f.setVisible(true);
         f.pack();
-        f.setSize(850,850);
+        f.setSize(900,920);
         f.setLocationRelativeTo(null);
     }
 }
