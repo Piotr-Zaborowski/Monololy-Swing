@@ -1,9 +1,18 @@
 package com.company;
 
+import java.util.Arrays;
+
 public class GameLogic {
+
+    static boolean ispurchased[]=new boolean[39];
 
     public GameLogic()
     {
+        Arrays.fill(ispurchased,false);
+        ispurchased[0]=true;
+        ispurchased[10]=true;
+        ispurchased[20]=true;
+        ispurchased[30]=true;
 
     }
 
@@ -16,6 +25,9 @@ public class GameLogic {
         if (d.length()>3) tmp++;
         return tmp;
     }
+
+
+
 
     int XonMap(int placetotal)
     {
