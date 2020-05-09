@@ -60,6 +60,9 @@ class MyJComponent extends JComponent {
     Player P4=new Player();
 
     JLabel P1l=new JLabel();
+    JLabel P2l=new JLabel();
+    JLabel P3l=new JLabel();
+    JLabel P4l=new JLabel();
 
 
     void currentplayerthread()
@@ -74,15 +77,34 @@ class MyJComponent extends JComponent {
                 playerlabel.setBounds(270, 100, 300, 80);
                 add(playerlabel);
 
-                P1l.setBounds(G1.XonMap(1),800,40,40);
+                P1l.setBounds(G1.XonMap(P1.position),G1.YonMap(P1.position),35,40);
+                P2l.setBounds(G1.XonMap(P2.position)+35,G1.YonMap(P2.position),35,40);
+                P3l.setBounds(G1.XonMap(P3.position),G1.YonMap(P3.position)+40,35,40);
+                P4l.setBounds(G1.XonMap(P4.position)+35,G1.YonMap(P4.position)+40,35,40);
+
                 P1l.setText("P1");
+                P2l.setText("P2");
+                P3l.setText("P3");
+                P4l.setText("P4");
+
                 P1l.setForeground(Color.RED);
+                P2l.setForeground(Color.BLACK);
+                P3l.setForeground(Color.BLUE);
+                P4l.setForeground(Color.magenta);
+
                 P1l.setFont(new Font("Serif", Font.BOLD, 30));
+                P2l.setFont(new Font("Serif", Font.BOLD, 30));
+                P3l.setFont(new Font("Serif", Font.BOLD, 30));
+                P4l.setFont(new Font("Serif", Font.BOLD, 30));
+
                 add(P1l);
+                add(P2l);
+                add(P3l);
+                add(P4l);
 
 
                 //repaint(270,100,300,80);
-                repaint();
+                repaint(0,0,900,900);
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
@@ -178,6 +200,13 @@ class MyJComponent extends JComponent {
                         {
                             removeAll();
                             repaint();
+                            if(NumberOfPlayers==2)
+                            {
+                                P3.ChangePosition(-1);
+                                P4.ChangePosition(-1);
+                            }
+                            if (NumberOfPlayers==3) P4.ChangePosition(-1);
+
 
                             ImageIcon image5=createImageIcon("/StartingGameIn.jpg","");
                             JLabel image5l=new JLabel(image5);
