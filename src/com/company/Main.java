@@ -18,6 +18,7 @@ class MyJComponent extends JComponent {
     boolean CanRollDice=true;
     static int CurrentDiceRoll=0;
     boolean IsGameGoing=false;
+    boolean CanShowImage=false;
 
 
 
@@ -47,6 +48,14 @@ class MyJComponent extends JComponent {
             System.err.println("Couldn't find file: " + path);
             return null;
         }
+    }
+
+    public Player getCurrent(int i)
+    {
+        if(i==1) return P1;
+        if(i==2) return P2;
+        if(i==3) return P3;
+        return P4;
     }
 
     JLabel playerlabel=new JLabel();
@@ -266,11 +275,16 @@ class MyJComponent extends JComponent {
                                     JButton End_Turn = new JButton("End Turn");
                                     End_Turn.setBounds(650, 120, 100, 40);
                                     add(End_Turn);
+
+                                    JLabel currimglabel=new JLabel();
+
                                     End_Turn.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
                                             if(CanEndTurn==true)
                                             {
+                                                remove(currimglabel);
+                                                CanShowImage=false;
                                                 CanEndTurn=false;
                                                 CurrentDiceRoll=0;
                                                 Dice1.setText("");
@@ -292,11 +306,17 @@ class MyJComponent extends JComponent {
                                     JButton RollDice = new JButton("Roll Dice");
                                     RollDice.setBounds(650, 180, 100, 40);
                                     add(RollDice);
+
+
+
                                     RollDice.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
                                             if(CanRollDice==true)
                                             {
+                                                remove(currimglabel);
+                                                CanShowImage=true;
+
                                                 int random1 = (int)(Math.random() * 6 + 1);
                                                 int random2 = (int)(Math.random() * 6 + 1);
 
@@ -311,9 +331,6 @@ class MyJComponent extends JComponent {
                                                 if(CurrentPlayer==3) P3.ChangePosition(CurrentDiceRoll);
                                                 if(CurrentPlayer==4) P4.ChangePosition(CurrentDiceRoll);
 
-
-
-
                                                 repaint();
                                                 CanRollDice=false;
                                                 CanEndTurn=true;
@@ -322,6 +339,14 @@ class MyJComponent extends JComponent {
                                                     CanEndTurn=false;
                                                     CanRollDice=true;
                                                 }
+
+                                                String pathtoimagemovedto="/parts/"+String.valueOf(getCurrent(CurrentPlayer).position%40+".jpg");
+
+                                                ImageIcon currentimage=createImageIcon(pathtoimagemovedto,"");
+                                                currimglabel.setIcon(currentimage);
+                                                currimglabel.setBounds(150,500,300,200);
+                                                add(currimglabel);
+
                                             }
                                         }
                                     });
