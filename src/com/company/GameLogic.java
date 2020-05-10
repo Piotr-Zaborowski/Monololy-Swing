@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class GameLogic {
 
     static int price[]=new int[40];
+    static int owner[]=new int[40];
 
     public GameLogic()
     {
