@@ -72,9 +72,17 @@ class MyJComponent extends JComponent {
             {
                 remove(playerlabel);
                 String tmpcurrentplayer=String.valueOf(CurrentPlayer);
-                playerlabel.setText("The current player is: "+tmpcurrentplayer);
+
+                int cpmoney=-888;
+                if(CurrentPlayer==1) cpmoney=P1.money;
+                if(CurrentPlayer==2) cpmoney=P2.money;
+                if(CurrentPlayer==3) cpmoney=P3.money;
+                if(CurrentPlayer==4) cpmoney=P4.money;
+                String cmponeystring=String.valueOf(cpmoney)+"M";
+
+                playerlabel.setText("The current player is: "+tmpcurrentplayer+" "+cmponeystring);
                 playerlabel.setFont(new Font("Serif", Font.PLAIN, 30));
-                playerlabel.setBounds(270, 100, 300, 80);
+                playerlabel.setBounds(270, 100, 400, 80);
                 add(playerlabel);
 
                 P1l.setBounds(G1.XonMap(P1.position),G1.YonMap(P1.position),35,40);
@@ -256,7 +264,7 @@ class MyJComponent extends JComponent {
 
 
                                     JButton End_Turn = new JButton("End Turn");
-                                    End_Turn.setBounds(570, 120, 100, 40);
+                                    End_Turn.setBounds(650, 120, 100, 40);
                                     add(End_Turn);
                                     End_Turn.addActionListener(new ActionListener() {
                                         @Override
@@ -282,7 +290,7 @@ class MyJComponent extends JComponent {
 
 
                                     JButton RollDice = new JButton("Roll Dice");
-                                    RollDice.setBounds(570, 180, 100, 40);
+                                    RollDice.setBounds(650, 180, 100, 40);
                                     add(RollDice);
                                     RollDice.addActionListener(new ActionListener() {
                                         @Override

@@ -4,9 +4,20 @@ import java.util.Arrays;
 
 public class GameLogic {
 
-    static int price[]=new int[39];
+    static int price[]=new int[40];
 
     public GameLogic()
+    {
+        fillpricearray();
+
+
+
+
+
+
+    }
+
+    void fillpricearray()
     {
         Arrays.fill(price,0);
 
@@ -27,11 +38,34 @@ public class GameLogic {
         price[4]=-200; //tax
         price[38]=-100;
 
+        price[5]=200; //rails
+        price[15]=200;
+        price[25]=200;
+        price[35]=200;
 
-
-
-
-
+        price[1]=60;
+        price[2]=60;
+        price[6]=100;
+        price[8]=100;
+        price[9]=120;
+        price[11]=140;
+        price[12]=150;
+        price[13]=140;
+        price[14]=160;
+        price[16]=180;
+        price[18]=180;
+        price[19]=200;
+        price[21]=220;
+        price[23]=240;
+        price[26]=260;
+        price[27]=260;
+        price[28]=150;
+        price[29]=280;
+        price[31]=300;
+        price[32]=300;
+        price[34]=320;
+        price[37]=350;
+        price[39]=400;
     }
 
     int PlayerCounter(String a, String b, String c, String d)
