@@ -4,15 +4,33 @@ import java.util.Arrays;
 
 public class GameLogic {
 
-    static boolean ispurchased[]=new boolean[39];
+    static int price[]=new int[39];
 
     public GameLogic()
     {
-        Arrays.fill(ispurchased,false);
-        ispurchased[0]=true;
-        ispurchased[10]=true;
-        ispurchased[20]=true;
-        ispurchased[30]=true;
+        Arrays.fill(price,0);
+
+        //nothing happens
+        price[0]=0;
+        price[10]=0;
+        price[20]=0;
+
+        price[30]=-666; //jail
+
+        price[2]=-777; //comm chest
+        price[17]=-777;
+        price[33]=-777;
+
+        price[7]=-888; //chance
+        price[22]=-888;
+
+        price[4]=-200; //tax
+        price[38]=-100;
+
+
+
+
+
 
     }
 
