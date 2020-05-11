@@ -11,16 +11,10 @@ public class GameLogic {
     {
         fillpricearray();
 
-
-
-
-
-
     }
 
     void fillpricearray()
     {
-        Arrays.fill(price,0);
 
         //nothing happens
         price[0]=0;
@@ -45,10 +39,11 @@ public class GameLogic {
         price[35]=200;
 
         price[1]=60;
-        price[2]=60;
+        price[3]=60;
         price[6]=100;
         price[8]=100;
         price[9]=120;
+
         price[11]=140;
         price[12]=150;
         price[13]=140;
@@ -56,12 +51,15 @@ public class GameLogic {
         price[16]=180;
         price[18]=180;
         price[19]=200;
+
         price[21]=220;
         price[23]=240;
+        price[24]=240;
         price[26]=260;
         price[27]=260;
         price[28]=150;
         price[29]=280;
+
         price[31]=300;
         price[32]=300;
         price[34]=320;
@@ -174,6 +172,10 @@ public class GameLogic {
         if (place==39) return 700-15;
 
         return 400;
+    }
+    public int returnprice(int place)
+    {
+        return price[place%40];
     }
 
 

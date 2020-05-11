@@ -19,6 +19,7 @@ class MyJComponent extends JComponent {
     static int CurrentDiceRoll=0;
     boolean IsGameGoing=false;
     boolean CanShowImage=false;
+    boolean CanBuy=false;
 
 
 
@@ -132,13 +133,51 @@ class MyJComponent extends JComponent {
         thread1.start();
     }
 
+    JLabel p1money=new JLabel();
+    JLabel p2money=new JLabel();
+    JLabel p3money=new JLabel();
+    JLabel p4money=new JLabel();
+
+    void showmoney()
+    {
+        remove(p1money);
+        remove(p2money);
+        remove(p3money);
+        remove(p4money);
+
+        p1money.setText("P1: "+String.valueOf(P1.money)+"M");
+        p2money.setText("P2: "+String.valueOf(P2.money)+"M");
+        p3money.setText("P3: "+String.valueOf(P3.money)+"M");
+        p4money.setText("P4: "+String.valueOf(P4.money)+"M");
+
+        p1money.setFont(new Font("Serif", Font.PLAIN, 20));
+        p2money.setFont(new Font("Serif", Font.PLAIN, 20));
+        p3money.setFont(new Font("Serif", Font.PLAIN, 20));
+        p4money.setFont(new Font("Serif", Font.PLAIN, 20));
+
+        p1money.setForeground(Color.RED);
+        p2money.setForeground(Color.BLACK);
+        p3money.setForeground(Color.BLUE);
+        p4money.setForeground(Color.magenta);
+
+        p1money.setBounds(120,330,150,50);
+        p2money.setBounds(220,330,150,50);
+        p3money.setBounds(120,360,150,50);
+        p4money.setBounds(220,360,150,50);
+
+        add(p1money);
+        add(p2money);
+        if(NumberOfPlayers>2) add(p3money);
+        if(NumberOfPlayers==4) add(p4money);
+
+    }
+
 
 
     MyJComponent()
     {
         GameLogic g1=new GameLogic();
         setLayout(null);
-
 
         ImageIcon image1=createImageIcon("/monopoly.jpg","");
         JLabel image1l=new JLabel(image1);
@@ -264,6 +303,7 @@ class MyJComponent extends JComponent {
                                     t2.stop();
                                     IsGameGoing=true;
 
+                                    showmoney();
                                     JLabel Dice1=new JLabel("");
                                     Dice1.setBounds(450, 180, 140, 30);
                                     Dice1.setFont(new Font("Serif", Font.PLAIN, 30));
@@ -278,11 +318,17 @@ class MyJComponent extends JComponent {
 
                                     JLabel currimglabel=new JLabel();
 
+                                    JLabel currentowneris=new JLabel();
+                                    JButton Buyb = new JButton("BUY");
+
                                     End_Turn.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
                                             if(CanEndTurn==true)
                                             {
+                                                CanBuy=false;
+                                                remove(currentowneris);
+                                                remove(Buyb);
                                                 remove(currimglabel);
                                                 CanShowImage=false;
                                                 CanEndTurn=false;
@@ -314,6 +360,9 @@ class MyJComponent extends JComponent {
                                         public void actionPerformed(ActionEvent e) {
                                             if(CanRollDice==true)
                                             {
+                                                CanBuy=true;
+
+                                                remove(Buyb);
                                                 remove(currimglabel);
                                                 CanShowImage=true;
 
@@ -346,6 +395,55 @@ class MyJComponent extends JComponent {
                                                 currimglabel.setIcon(currentimage);
                                                 currimglabel.setBounds(150,500,300,200);
                                                 add(currimglabel);
+
+                                                int ownerofcurrenttile=GameLogic.owner[getCurrent(CurrentPlayer).position%40];
+                                                String currentowner="P"+String.valueOf(ownerofcurrenttile);
+                                                if(ownerofcurrenttile==0)
+                                                {
+                                                    currentowner="none";
+                                                }
+                                                int currentposition=getCurrent(CurrentPlayer).position%40;
+
+                                                currentowneris.setText("Current owner is: "+currentowner);
+                                                currentowneris.setBounds(350, 240, 300, 30);
+                                                currentowneris.setFont(new Font("Serif", Font.PLAIN, 30));
+                                                Buyb.setBounds(650, 240, 100, 40);
+
+                                                int priceofcurrenttile=G1.returnprice(getCurrent(CurrentPlayer).position);
+                                                //System.out.println(priceofcurrenttile);
+
+                                                if (priceofcurrenttile>0)
+                                                {
+                                                    add(currentowneris);
+                                                }
+
+                                                if (priceofcurrenttile>0 && ownerofcurrenttile==0)
+                                                {
+                                                    add(Buyb);
+                                                }
+                                                showmoney();
+
+                                                Buyb.addActionListener(new ActionListener() {
+                                                    @Override
+                                                    public void actionPerformed(ActionEvent e) {
+
+                                                        if(CanBuy==true)
+                                                        {
+                                                            remove(currentowneris);
+                                                            remove(Buyb);
+                                                            getCurrent(CurrentPlayer).BuyPlace(currentposition);
+                                                            GameLogic.owner[currentposition]=CurrentPlayer;
+
+                                                            currentowneris.setText("You bought the place!");
+                                                            add(currentowneris);
+                                                            showmoney();
+                                                            CanBuy=false;
+                                                        }
+
+
+                                                    }
+                                                });
+
 
                                             }
                                         }
