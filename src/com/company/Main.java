@@ -84,10 +84,26 @@ class MyJComponent extends JComponent {
                 String tmpcurrentplayer=String.valueOf(CurrentPlayer);
 
                 int cpmoney=-888;
-                if(CurrentPlayer==1) cpmoney=P1.money;
-                if(CurrentPlayer==2) cpmoney=P2.money;
-                if(CurrentPlayer==3) cpmoney=P3.money;
-                if(CurrentPlayer==4) cpmoney=P4.money;
+                if(CurrentPlayer==1)
+                {
+                    cpmoney=P1.money;
+                    playerlabel.setForeground(Color.RED);
+                }
+                if(CurrentPlayer==2)
+                {
+                    cpmoney=P2.money;
+                    playerlabel.setForeground(Color.BLACK);
+                }
+                if(CurrentPlayer==3)
+                {
+                    cpmoney=P3.money;
+                    playerlabel.setForeground(Color.BLUE);
+                }
+                if(CurrentPlayer==4)
+                {
+                    cpmoney=P4.money;
+                    playerlabel.setForeground(Color.magenta);
+                }
                 String cmponeystring=String.valueOf(cpmoney)+"M";
 
                 playerlabel.setText("The current player is: "+tmpcurrentplayer+" "+cmponeystring);
@@ -133,6 +149,14 @@ class MyJComponent extends JComponent {
         thread1.start();
     }
 
+
+
+
+
+
+
+
+
     JLabel p1money=new JLabel();
     JLabel p2money=new JLabel();
     JLabel p3money=new JLabel();
@@ -144,7 +168,6 @@ class MyJComponent extends JComponent {
         remove(p2money);
         remove(p3money);
         remove(p4money);
-
         p1money.setText("P1: "+String.valueOf(P1.money)+"M");
         p2money.setText("P2: "+String.valueOf(P2.money)+"M");
         p3money.setText("P3: "+String.valueOf(P3.money)+"M");

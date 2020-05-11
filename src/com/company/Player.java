@@ -21,7 +21,6 @@ public class Player {
     public void BuyPlace(int number)
     {
         int moneyneeded=GameLogic.price[number];
-        System.out.println(moneyneeded);
         money=money-moneyneeded;
 
     }
