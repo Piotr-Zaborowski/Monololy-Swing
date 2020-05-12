@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Arrays;
 
 class MyJComponent extends JComponent {
 
@@ -192,6 +193,31 @@ class MyJComponent extends JComponent {
         add(p2money);
         if(NumberOfPlayers>2) add(p3money);
         if(NumberOfPlayers==4) add(p4money);
+
+    }
+
+    JLabel board[]=new JLabel[40];
+    void showowner()
+    {
+        for (int i=0; i<40; i++)
+        {
+            board[i]=new JLabel("TEST");
+        }
+        for (int i=0; i<40; i++)
+        {
+            remove(board[i]);
+        }
+        for (int i=0; i<40; i++)
+        {
+
+            board[i].setFont(new Font("Arial", Font.BOLD, 20));
+            board[i].setForeground(Color.black);
+            board[i].setText("P"+String.valueOf(GameLogic.owner[i]));
+            board[i].setBounds(G1.XonMapposition(i)+20,G1.YonMapposition(i),60,60);
+            if(GameLogic.owner[i]!=0) add(board[i]);
+            //System.out.println(board[i]);
+
+        }
 
     }
 
@@ -461,6 +487,7 @@ class MyJComponent extends JComponent {
                                                             add(currentowneris);
                                                             showmoney();
                                                             CanBuy=false;
+                                                            showowner();
                                                         }
 
 
