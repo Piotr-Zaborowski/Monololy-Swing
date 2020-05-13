@@ -109,7 +109,7 @@ class MyJComponent extends JComponent {
 
                 playerlabel.setText("The current player is: "+tmpcurrentplayer+" "+cmponeystring);
                 playerlabel.setFont(new Font("Serif", Font.PLAIN, 30));
-                playerlabel.setBounds(270, 100, 400, 80);
+                playerlabel.setBounds(200, 120, 400, 80);
                 add(playerlabel);
 
                 P1l.setBounds(G1.XonMap(P1.position),G1.YonMap(P1.position),35,40);
@@ -184,10 +184,10 @@ class MyJComponent extends JComponent {
         p3money.setForeground(Color.BLUE);
         p4money.setForeground(Color.magenta);
 
-        p1money.setBounds(120,330,150,50);
-        p2money.setBounds(220,330,150,50);
-        p3money.setBounds(120,360,150,50);
-        p4money.setBounds(220,360,150,50);
+        p1money.setBounds(150,330,150,50);
+        p2money.setBounds(250,330,150,50);
+        p3money.setBounds(150,360,150,50);
+        p4money.setBounds(250,360,150,50);
 
         add(p1money);
         add(p2money);
@@ -214,6 +214,11 @@ class MyJComponent extends JComponent {
             board[i].setForeground(Color.black);
             board[i].setText("P"+String.valueOf(GameLogic.owner[i]));
             board[i].setBounds(G1.XonMapposition(i)+20,G1.YonMapposition(i),60,60);
+            if(GameLogic.owner[i]==1) board[i].setForeground(Color.RED);
+            if(GameLogic.owner[i]==2) board[i].setForeground(Color.BLACK);
+            if(GameLogic.owner[i]==3) board[i].setForeground(Color.BLUE);
+            if(GameLogic.owner[i]==4) board[i].setForeground(Color.magenta);
+
             if(GameLogic.owner[i]!=0) add(board[i]);
             //System.out.println(board[i]);
 
@@ -225,6 +230,7 @@ class MyJComponent extends JComponent {
 
     MyJComponent()
     {
+
         GameLogic g1=new GameLogic();
         setLayout(null);
 
@@ -354,15 +360,15 @@ class MyJComponent extends JComponent {
 
                                     showmoney();
                                     JLabel Dice1=new JLabel("");
-                                    Dice1.setBounds(450, 180, 140, 30);
+                                    Dice1.setBounds(450, 210, 140, 30);
                                     Dice1.setFont(new Font("Serif", Font.PLAIN, 30));
                                     JLabel Dice2=new JLabel("");
-                                    Dice2.setBounds(480, 180, 140, 30);
+                                    Dice2.setBounds(480, 210, 140, 30);
                                     Dice2.setFont(new Font("Serif", Font.PLAIN, 30));
 
 
                                     JButton End_Turn = new JButton("End Turn");
-                                    End_Turn.setBounds(650, 120, 100, 40);
+                                    End_Turn.setBounds(620, 150, 100, 40);
                                     add(End_Turn);
 
                                     JLabel currimglabel=new JLabel();
@@ -399,7 +405,7 @@ class MyJComponent extends JComponent {
 
 
                                     JButton RollDice = new JButton("Roll Dice");
-                                    RollDice.setBounds(650, 180, 100, 40);
+                                    RollDice.setBounds(620, 210, 100, 40);
                                     add(RollDice);
 
 
@@ -442,7 +448,7 @@ class MyJComponent extends JComponent {
 
                                                 ImageIcon currentimage=createImageIcon(pathtoimagemovedto,"");
                                                 currimglabel.setIcon(currentimage);
-                                                currimglabel.setBounds(150,500,300,200);
+                                                currimglabel.setBounds(160,450,300,300);
                                                 add(currimglabel);
 
                                                 int ownerofcurrenttile=GameLogic.owner[getCurrent(CurrentPlayer).position%40];
@@ -454,9 +460,9 @@ class MyJComponent extends JComponent {
                                                 int currentposition=getCurrent(CurrentPlayer).position%40;
 
                                                 currentowneris.setText("Current owner is: "+currentowner);
-                                                currentowneris.setBounds(350, 240, 300, 30);
+                                                currentowneris.setBounds(300, 270, 300, 30);
                                                 currentowneris.setFont(new Font("Serif", Font.PLAIN, 30));
-                                                Buyb.setBounds(650, 240, 100, 40);
+                                                Buyb.setBounds(620, 270, 100, 40);
 
                                                 int priceofcurrenttile=G1.returnprice(getCurrent(CurrentPlayer).position);
                                                 //System.out.println(priceofcurrenttile);
