@@ -460,7 +460,7 @@ class MyJComponent extends JComponent {
                                                 int currentposition=getCurrent(CurrentPlayer).position%40;
 
                                                 currentowneris.setText("Current owner is: "+currentowner);
-                                                currentowneris.setBounds(300, 270, 300, 30);
+                                                currentowneris.setBounds(300, 270, 300, 35);
                                                 currentowneris.setFont(new Font("Serif", Font.PLAIN, 30));
                                                 Buyb.setBounds(620, 270, 100, 40);
 
