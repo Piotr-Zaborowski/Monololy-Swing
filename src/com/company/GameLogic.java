@@ -6,11 +6,13 @@ public class GameLogic {
 
     static int price[]=new int[40];
     static int owner[]=new int[40];
+    static int numofhouses[]=new int[40];
     static int partsarr[][]=new int[40][7];
 
     public GameLogic()
     {
         Arrays.fill(owner,0);
+        Arrays.fill(numofhouses,0);
         fillpricearray();
         fillpartsarr();
 

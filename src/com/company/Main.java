@@ -13,6 +13,8 @@ class MyJComponent extends JComponent {
 
     Timer t;
     Timer t2;
+    Timer taxtimer;
+    Timer starttimer;
     static int NumberOfPlayers=0;
     static int CurrentPlayer=1;
     boolean CanEndTurn=false;
@@ -54,6 +56,15 @@ class MyJComponent extends JComponent {
 
     public Player getCurrent(int i)
     {
+        if(i==1) return P1;
+        if(i==2) return P2;
+        if(i==3) return P3;
+        return P4;
+    }
+
+    public Player getCurrent()
+    {
+        int i=CurrentPlayer;
         if(i==1) return P1;
         if(i==2) return P2;
         if(i==3) return P3;
@@ -150,14 +161,6 @@ class MyJComponent extends JComponent {
         thread1.start();
     }
 
-
-
-
-
-
-
-
-
     JLabel p1money=new JLabel();
     JLabel p2money=new JLabel();
     JLabel p3money=new JLabel();
@@ -223,7 +226,89 @@ class MyJComponent extends JComponent {
             //System.out.println(board[i]);
 
         }
+    }
 
+    JLabel taxlabel=new JLabel();
+    public void PayTaxIfNeeded()
+    {
+        remove(taxlabel);
+        taxlabel.setFont(new Font("Serif", Font.PLAIN, 50));
+        taxlabel.setBounds(400,500,500,200);
+        if (getCurrent().position==38)
+        {
+            getCurrent().money-=100;
+            taxlabel.setText("TAX! -100M");
+        }
+
+        if (getCurrent().position==4)
+        {
+            getCurrent().money-=200;
+            taxlabel.setText("TAX! -200M");
+        }
+        if(getCurrent().position==4||getCurrent().position==38)
+        {
+            showmoney();
+            add(taxlabel);
+            taxtimer=new Timer(300, new ActionListener() {
+                int i=0;
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (i==0) taxlabel.setForeground(Color.BLACK);
+                    if (i==1) taxlabel.setForeground(Color.DARK_GRAY);
+                    if (i==2) taxlabel.setForeground(Color.gray);
+                    if(i==3)
+                    {
+                        remove(taxlabel);
+                        taxtimer.stop();
+                    }
+                    i++;
+                }
+            });
+            taxtimer.start();
+        }
+    }
+    JLabel startlabel=new JLabel();
+    public void GetMoneyOnStart()
+    {
+        int a=getCurrent().position/40;
+        int b=(getCurrent().position+CurrentDiceRoll)/40;
+        //System.out.println(a+" "+b);
+        if (a!=b)
+        {
+            //System.out.println("ADDING MOENY");
+            getCurrent().money+=200;
+            remove(startlabel);
+            startlabel.setFont(new Font("Serif", Font.PLAIN, 50));
+            startlabel.setBounds(400,400,500,200);
+            startlabel.setText("START! 200M");
+            add(startlabel);
+            starttimer=new Timer(300, new ActionListener() {
+                int i=0;
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (i==0) startlabel.setForeground(Color.green);
+                    if (i==1) startlabel.setForeground(Color.yellow);
+                    if (i==2) startlabel.setForeground(Color.red);
+                    if (i==3) startlabel.setForeground(Color.blue);
+                    if (i==4) startlabel.setForeground(Color.magenta);
+                    if (i==5) startlabel.setForeground(Color.black);
+                    if (i==6) startlabel.setForeground(Color.white);
+                    if (i==7) startlabel.setForeground(Color.green);
+                    if(i==8)
+                    {
+                        remove(startlabel);
+                        starttimer.stop();
+                    }
+                    i++;
+                }
+            });
+            starttimer.start();
+
+
+
+        }
     }
 
 
@@ -403,7 +488,6 @@ class MyJComponent extends JComponent {
 
 
 
-
                                     JButton RollDice = new JButton("Roll Dice");
                                     RollDice.setBounds(620, 210, 100, 40);
                                     add(RollDice);
@@ -423,13 +507,15 @@ class MyJComponent extends JComponent {
 
                                                 int random1 = (int)(Math.random() * 6 + 1);
                                                 int random2 = (int)(Math.random() * 6 + 1);
+                                                //int random1=40;
+                                                //int random2=0;
 
                                                 Dice1.setText(String.valueOf(random1));
                                                 Dice2.setText(String.valueOf(random2));
                                                 add(Dice1);
                                                 add(Dice2);
                                                 CurrentDiceRoll=random1+random2;
-
+                                                GetMoneyOnStart();
                                                 if(CurrentPlayer==1) P1.ChangePosition(CurrentDiceRoll);
                                                 if(CurrentPlayer==2) P2.ChangePosition(CurrentDiceRoll);
                                                 if(CurrentPlayer==3) P3.ChangePosition(CurrentDiceRoll);
@@ -472,11 +558,14 @@ class MyJComponent extends JComponent {
                                                     add(currentowneris);
                                                 }
 
-                                                if (priceofcurrenttile>0 && ownerofcurrenttile==0)
+                                                if (priceofcurrenttile>0 && ownerofcurrenttile==0&&priceofcurrenttile<getCurrent().money)
                                                 {
                                                     add(Buyb);
                                                 }
+                                                PayTaxIfNeeded();
                                                 showmoney();
+
+
 
                                                 Buyb.addActionListener(new ActionListener() {
                                                     @Override
