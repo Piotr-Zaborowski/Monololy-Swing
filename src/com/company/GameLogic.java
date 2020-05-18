@@ -7,7 +7,7 @@ public class GameLogic {
     static int price[]=new int[40];
     static int owner[]=new int[40];
     static int numofhouses[]=new int[40];
-    static int partsarr[][]=new int[40][7];
+    static int partsarr[][]=new int[40][8];
 
     public GameLogic()
     {

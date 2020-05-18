@@ -24,6 +24,17 @@ class MyJComponent extends JComponent {
     boolean IsGameGoing=false;
     boolean CanShowImage=false;
     boolean CanBuy=false;
+    boolean CanManageprops=true;
+
+
+    JButton End_Turn = new JButton("End Turn");
+    JButton Buyb = new JButton("BUY");
+    JButton RollDice = new JButton("Roll Dice");
+    JButton ManageProp = new JButton("Manage Properties");
+    JLabel Dice1=new JLabel("");
+    JLabel Dice2=new JLabel("");
+    JLabel currimglabel=new JLabel();
+    JLabel currentowneris=new JLabel();
 
 
 
@@ -40,6 +51,7 @@ class MyJComponent extends JComponent {
             }
         }
         super.paintComponents(g);
+
 
     }
 
@@ -72,7 +84,6 @@ class MyJComponent extends JComponent {
         return P4;
     }
 
-    JLabel playerlabel=new JLabel();
 
     GameLogic G1=new GameLogic();
 
@@ -87,6 +98,7 @@ class MyJComponent extends JComponent {
     JLabel P4l=new JLabel();
 
 
+    JLabel playerlabel=new JLabel();
     void currentplayerthread()
     {
         remove(playerlabel);
@@ -325,7 +337,7 @@ class MyJComponent extends JComponent {
         {
             if(GameLogic.partsarr[tmp][0]>0)
             {
-                System.out.println("NORMAL");
+                //System.out.println("NORMAL");
                 int numofhouses=GameLogic.numofhouses[tmp];
                 int priceoftrans=GameLogic.partsarr[tmp][numofhouses];
                 moneytransfered=priceoftrans;
@@ -333,7 +345,7 @@ class MyJComponent extends JComponent {
             }
             if(tmp==5||tmp==15||tmp==25||tmp==35)
             {
-                System.out.println("STATION");
+                //System.out.println("STATION");
                 int stationcounter=0;
                 int stationowner=GameLogic.owner[tmp];
                 if(GameLogic.owner[5]==stationowner) stationcounter++;
@@ -347,7 +359,20 @@ class MyJComponent extends JComponent {
                 if (stationcounter==4) priceoftrans=200;
                 moneytransfered=priceoftrans;
                 Payfeel.setText("P"+String.valueOf(CurrentPlayer)+" PAYED "+"P"+String.valueOf(GameLogic.owner[tmp])+" "+String.valueOf(priceoftrans)+"M");
-
+            }
+            if(tmp==12||tmp==28)
+            {
+                //System.out.println("UTILITY");
+                int utilitycounter=0;
+                int utilowner=GameLogic.owner[tmp];
+                if(GameLogic.owner[12]==utilowner) utilitycounter++;
+                if(GameLogic.owner[28]==utilowner) utilitycounter++;
+                int multiplyier=0;
+                if(utilitycounter==1) multiplyier=4;
+                if(utilitycounter==2) multiplyier=10;
+                int priceoftrans=multiplyier*CurrentDiceRoll;
+                moneytransfered=priceoftrans;
+                Payfeel.setText("P"+String.valueOf(CurrentPlayer)+" PAYED "+"P"+String.valueOf(GameLogic.owner[tmp])+" "+String.valueOf(priceoftrans)+"M");
             }
 
             Player ploosing=getCurrent();
@@ -382,12 +407,46 @@ class MyJComponent extends JComponent {
     }
 
 
+    public void removelabelsformanage()
+    {
+        //removes buttons
+        remove(End_Turn);
+        remove(Buyb);
+        remove(RollDice);
+        remove(ManageProp);
+
+        //removes labels
+        remove(Payfeel);
+        remove(startlabel);
+        remove(taxlabel);
+        remove(playerlabel);
+        remove(p1money);
+        remove(p2money);
+        remove(p3money);
+        remove(p4money);
+        remove(P1l);
+        remove(P2l);
+        remove(P3l);
+        remove(P4l);
+        remove(Dice1);
+        remove(Dice2);
+        remove(currimglabel);
+        remove(currentowneris);
+        try {
+            for (int i=0; i<40; i++)
+            {
+                remove(board[i]);
+            }
+
+        } catch (Exception e) {
+        }
+    }
+
     MyJComponent()
     {
 
         GameLogic g1=new GameLogic();
         setLayout(null);
-
         ImageIcon image1=createImageIcon("/monopoly.jpg","");
         JLabel image1l=new JLabel(image1);
         image1l.setBounds(400-image1.getIconWidth()/2, 0, image1.getIconWidth(), image1.getIconHeight());
@@ -510,26 +569,27 @@ class MyJComponent extends JComponent {
                                 IsGameGoing=true;
 
                                 showmoney();
-                                JLabel Dice1=new JLabel("");
+
                                 Dice1.setBounds(450, 210, 140, 30);
                                 Dice1.setFont(new Font("Serif", Font.PLAIN, 30));
-                                JLabel Dice2=new JLabel("");
+
                                 Dice2.setBounds(480, 210, 140, 30);
                                 Dice2.setFont(new Font("Serif", Font.PLAIN, 30));
 
 
-                                JButton End_Turn = new JButton("End Turn");
+
                                 End_Turn.setBounds(620, 150, 100, 40);
                                 add(End_Turn);
 
-                                JLabel currimglabel=new JLabel();
 
-                                JLabel currentowneris=new JLabel();
-                                JButton Buyb = new JButton("BUY");
+
 
                                 End_Turn.addActionListener(e13 -> {
                                     if(CanEndTurn==true)
                                     {
+                                        remove(startlabel);
+                                        remove(taxlabel);
+                                        remove(Payfeel);
                                         CanBuy=false;
                                         remove(currentowneris);
                                         remove(Buyb);
@@ -552,7 +612,7 @@ class MyJComponent extends JComponent {
 
 
 
-                                JButton RollDice = new JButton("Roll Dice");
+
                                 RollDice.setBounds(620, 210, 100, 40);
                                 add(RollDice);
 
@@ -562,14 +622,16 @@ class MyJComponent extends JComponent {
                                     if(CanRollDice==true)
                                     {
                                         CanBuy=true;
-
+                                        remove(startlabel);
+                                        remove(taxlabel);
+                                        remove(Payfeel);
                                         remove(Buyb);
                                         remove(currimglabel);
                                         CanShowImage=true;
 
                                         int random1 = (int)(Math.random() * 6 + 1);
                                         int random2 = (int)(Math.random() * 6 + 1);
-                                        //int random1=44;
+                                        //int random1=12;
                                         //int random2=0;
 
                                         Dice1.setText(String.valueOf(random1));
@@ -605,6 +667,10 @@ class MyJComponent extends JComponent {
                                         if(ownerofcurrenttile==0)
                                         {
                                             currentowner="none";
+                                        }
+                                        if(ownerofcurrenttile==CurrentPlayer)
+                                        {
+                                            currentowner="YOU";
                                         }
                                         int currentposition=getCurrent(CurrentPlayer).position%40;
 
@@ -649,16 +715,12 @@ class MyJComponent extends JComponent {
                                                 showmoney();
                                                 CanBuy=false;
                                                 showowner();
+                                                currentplayerthread();
                                             }
-
-
                                         });
-
 
                                     }
                                 });
-
-
 
 
 
