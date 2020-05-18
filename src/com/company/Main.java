@@ -407,31 +407,10 @@ class MyJComponent extends JComponent {
     }
 
 
-    public void removelabelsformanage()
+    public void manageprops()
     {
-        //removes buttons
-        remove(End_Turn);
-        remove(Buyb);
-        remove(RollDice);
         remove(ManageProp);
-
-        //removes labels
-        remove(Payfeel);
-        remove(startlabel);
-        remove(taxlabel);
-        remove(playerlabel);
-        remove(p1money);
-        remove(p2money);
-        remove(p3money);
-        remove(p4money);
-        remove(P1l);
-        remove(P2l);
-        remove(P3l);
-        remove(P4l);
-        remove(Dice1);
-        remove(Dice2);
-        remove(currimglabel);
-        remove(currentowneris);
+        remove(End_Turn);
         try {
             for (int i=0; i<40; i++)
             {
@@ -440,6 +419,20 @@ class MyJComponent extends JComponent {
 
         } catch (Exception e) {
         }
+        JButton backtogame=new JButton("Back to game");
+        backtogame.setBounds(520, 330, 200, 40);
+        add(backtogame);
+        repaint(0,0,900,900);
+        backtogame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                remove(backtogame);
+                add(End_Turn);
+                add(ManageProp);
+                showowner();
+                repaint(0,0,900,900);
+            }
+        });
     }
 
     MyJComponent()
@@ -610,9 +603,6 @@ class MyJComponent extends JComponent {
                                     }
                                 });
 
-
-
-
                                 RollDice.setBounds(620, 210, 100, 40);
                                 add(RollDice);
 
@@ -706,10 +696,6 @@ class MyJComponent extends JComponent {
                                                 remove(Buyb);
                                                 getCurrent(CurrentPlayer).BuyPlace(currentposition);
                                                 GameLogic.owner[currentposition]=CurrentPlayer;
-                                                if(currentposition==5||currentposition==15||currentposition==25||currentposition==35)
-                                                {
-                                                    getCurrent().numofstationowned++;
-                                                }
                                                 currentowneris.setText("You bought the place!");
                                                 add(currentowneris);
                                                 showmoney();
@@ -722,6 +708,17 @@ class MyJComponent extends JComponent {
                                     }
                                 });
 
+                                ManageProp.setBounds(520, 330, 200, 40);
+                                if(CanManageprops==true)
+                                {
+                                    add(ManageProp);
+                                }
+                                ManageProp.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        manageprops();
+                                    }
+                                });
 
 
 
