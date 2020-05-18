@@ -73,7 +73,6 @@ class MyJComponent extends JComponent {
     }
 
     JLabel playerlabel=new JLabel();
-    Thread thread1;
 
     GameLogic G1=new GameLogic();
 
@@ -90,76 +89,65 @@ class MyJComponent extends JComponent {
 
     void currentplayerthread()
     {
-        thread1 = new Thread(() -> {
-            while(true)
-            {
-                remove(playerlabel);
-                String tmpcurrentplayer=String.valueOf(CurrentPlayer);
+        remove(playerlabel);
+        String tmpcurrentplayer=String.valueOf(CurrentPlayer);
 
-                int cpmoney=-888;
-                if(CurrentPlayer==1)
-                {
-                    cpmoney=P1.money;
-                    playerlabel.setForeground(Color.RED);
-                }
-                if(CurrentPlayer==2)
-                {
-                    cpmoney=P2.money;
-                    playerlabel.setForeground(Color.BLACK);
-                }
-                if(CurrentPlayer==3)
-                {
-                    cpmoney=P3.money;
-                    playerlabel.setForeground(Color.BLUE);
-                }
-                if(CurrentPlayer==4)
-                {
-                    cpmoney=P4.money;
-                    playerlabel.setForeground(Color.magenta);
-                }
-                String cmponeystring=String.valueOf(cpmoney)+"M";
+        int cpmoney=-888;
+        if(CurrentPlayer==1)
+        {
+            cpmoney=P1.money;
+            playerlabel.setForeground(Color.RED);
+        }
+        if(CurrentPlayer==2)
+        {
+            cpmoney=P2.money;
+            playerlabel.setForeground(Color.BLACK);
+        }
+        if(CurrentPlayer==3)
+        {
+            cpmoney=P3.money;
+            playerlabel.setForeground(Color.BLUE);
+        }
+        if(CurrentPlayer==4)
+        {
+            cpmoney=P4.money;
+            playerlabel.setForeground(Color.magenta);
+        }
+        String cmponeystring=String.valueOf(cpmoney)+"M";
 
-                playerlabel.setText("The current player is: "+tmpcurrentplayer+" "+cmponeystring);
-                playerlabel.setFont(new Font("Serif", Font.PLAIN, 30));
-                playerlabel.setBounds(200, 120, 400, 80);
-                add(playerlabel);
+        playerlabel.setText("The current player is: "+tmpcurrentplayer+" "+cmponeystring);
+        playerlabel.setFont(new Font("Serif", Font.PLAIN, 30));
+        playerlabel.setBounds(200, 120, 400, 80);
+        add(playerlabel);
 
-                P1l.setBounds(G1.XonMap(P1.position),G1.YonMap(P1.position),35,40);
-                P2l.setBounds(G1.XonMap(P2.position)+35,G1.YonMap(P2.position),35,40);
-                P3l.setBounds(G1.XonMap(P3.position),G1.YonMap(P3.position)+40,35,40);
-                P4l.setBounds(G1.XonMap(P4.position)+35,G1.YonMap(P4.position)+40,35,40);
+        P1l.setBounds(G1.XonMap(P1.position),G1.YonMap(P1.position),35,40);
+        P2l.setBounds(G1.XonMap(P2.position)+35,G1.YonMap(P2.position),35,40);
+        P3l.setBounds(G1.XonMap(P3.position),G1.YonMap(P3.position)+40,35,40);
+        P4l.setBounds(G1.XonMap(P4.position)+35,G1.YonMap(P4.position)+40,35,40);
 
-                P1l.setText("P1");
-                P2l.setText("P2");
-                P3l.setText("P3");
-                P4l.setText("P4");
+        P1l.setText("P1");
+        P2l.setText("P2");
+        P3l.setText("P3");
+        P4l.setText("P4");
 
-                P1l.setForeground(Color.RED);
-                P2l.setForeground(Color.BLACK);
-                P3l.setForeground(Color.BLUE);
-                P4l.setForeground(Color.magenta);
+        P1l.setForeground(Color.RED);
+        P2l.setForeground(Color.BLACK);
+        P3l.setForeground(Color.BLUE);
+        P4l.setForeground(Color.magenta);
 
-                P1l.setFont(new Font("Serif", Font.BOLD, 30));
-                P2l.setFont(new Font("Serif", Font.BOLD, 30));
-                P3l.setFont(new Font("Serif", Font.BOLD, 30));
-                P4l.setFont(new Font("Serif", Font.BOLD, 30));
+        P1l.setFont(new Font("Serif", Font.BOLD, 30));
+        P2l.setFont(new Font("Serif", Font.BOLD, 30));
+        P3l.setFont(new Font("Serif", Font.BOLD, 30));
+        P4l.setFont(new Font("Serif", Font.BOLD, 30));
 
-                add(P1l);
-                add(P2l);
-                add(P3l);
-                add(P4l);
+        add(P1l);
+        add(P2l);
+        add(P3l);
+        add(P4l);
 
 
-                //repaint(270,100,300,80);
-                repaint(0,0,900,900);
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread1.start();
+        //repaint(270,100,300,80);
+        repaint(0,0,900,900);
     }
 
 
@@ -197,6 +185,7 @@ class MyJComponent extends JComponent {
         add(p2money);
         if(NumberOfPlayers>2) add(p3money);
         if(NumberOfPlayers==4) add(p4money);
+        repaint(0,0,900,900);
 
     }
 
@@ -228,6 +217,7 @@ class MyJComponent extends JComponent {
             //System.out.println(board[i]);
 
         }
+        repaint(0,0,900,900);
     }
 
 
@@ -265,12 +255,14 @@ class MyJComponent extends JComponent {
                     {
                         remove(taxlabel);
                         taxtimer.stop();
+                        repaint(0,0,900,900);
                     }
                     i++;
                 }
             });
             taxtimer.start();
         }
+        repaint(0,0,900,900);
     }
 
 
@@ -306,6 +298,7 @@ class MyJComponent extends JComponent {
                     {
                         remove(startlabel);
                         starttimer.stop();
+                        repaint(0,0,900,900);
                     }
                     i++;
                 }
@@ -315,6 +308,7 @@ class MyJComponent extends JComponent {
 
 
         }
+        repaint(0,0,900,900);
     }
 
 
@@ -377,12 +371,14 @@ class MyJComponent extends JComponent {
                     {
                         remove(Payfeel);
                         payfeetimer.stop();
+                        repaint(0,0,900,900);
                     }
                     i++;
                 }
             });
             payfeetimer.start();
         }
+        repaint(0,0,900,900);
     }
 
 
@@ -549,6 +545,7 @@ class MyJComponent extends JComponent {
                                         {
                                             CurrentPlayer=1;
                                         }
+                                        currentplayerthread();
                                         //System.out.println(CurrentPlayer);
                                     }
                                 });
@@ -572,7 +569,7 @@ class MyJComponent extends JComponent {
 
                                         int random1 = (int)(Math.random() * 6 + 1);
                                         int random2 = (int)(Math.random() * 6 + 1);
-                                        //int random1=5;
+                                        //int random1=44;
                                         //int random2=0;
 
                                         Dice1.setText(String.valueOf(random1));
@@ -585,6 +582,7 @@ class MyJComponent extends JComponent {
                                         if(CurrentPlayer==2) P2.ChangePosition(CurrentDiceRoll);
                                         if(CurrentPlayer==3) P3.ChangePosition(CurrentDiceRoll);
                                         if(CurrentPlayer==4) P4.ChangePosition(CurrentDiceRoll);
+
 
                                         repaint();
                                         CanRollDice=false;
@@ -629,6 +627,7 @@ class MyJComponent extends JComponent {
                                         }
                                         PayTaxIfNeeded();
                                         Payfee();
+                                        currentplayerthread();
                                         showmoney();
 
 
