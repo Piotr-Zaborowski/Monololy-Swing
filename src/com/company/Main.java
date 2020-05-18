@@ -162,11 +162,11 @@ class MyJComponent extends JComponent {
         thread1.start();
     }
 
+
     JLabel p1money=new JLabel();
     JLabel p2money=new JLabel();
     JLabel p3money=new JLabel();
     JLabel p4money=new JLabel();
-
     void showmoney()
     {
         remove(p1money);
@@ -200,6 +200,7 @@ class MyJComponent extends JComponent {
 
     }
 
+
     JLabel board[]=new JLabel[40];
     void showowner()
     {
@@ -229,8 +230,8 @@ class MyJComponent extends JComponent {
         }
     }
 
+
     JLabel taxlabel=new JLabel();
-    
     public void PayTaxIfNeeded()
     {
         remove(taxlabel);
@@ -271,6 +272,7 @@ class MyJComponent extends JComponent {
             taxtimer.start();
         }
     }
+
 
     JLabel startlabel=new JLabel();
     public void GetMoneyOnStart()
@@ -315,8 +317,8 @@ class MyJComponent extends JComponent {
         }
     }
 
-    JLabel Payfeel=new JLabel();
 
+    JLabel Payfeel=new JLabel();
     public void Payfee()
     {
         remove(Payfeel);
